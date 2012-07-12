@@ -6,6 +6,8 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " Bundle: nathanaelkane/vim-indent-guides
 " Bundle: wincent/Command-T
 " Bundle: vim-scripts/AutoTag
+" Bundle: skwp/vim-ruby-conque 
+" Bundle: tpope/vim-surround
 call pathogen#infect()
 
 filetype off
@@ -17,6 +19,7 @@ set nobk
 set nobackup
 set nowritebackup
 set wildignore=*~
+
 
 "folding
 set foldenable
@@ -31,6 +34,9 @@ autocmd VimEnter * :IndentGuidesEnable
 set guioptions-=T
 " don't know what this is actually
 au BufNewFile,BufRead *.apk set filetype=apk
+
+" tab autocompletion
+imap <Tab> <C-P>
 
 "set tabs to 4 spaces.
 set tabstop=2
@@ -66,7 +72,6 @@ autocmd VimEnter * wincmd p
 let NERDTreeIgnore = ['\.pyc$', '\~$']
 map <F2> :NERDTreeToggle<CR>
 
-
 "open the window larger than normal (100 wide by 40 tall)
 "win 100 40
 
@@ -88,7 +93,6 @@ noremap <silent> ,l :wincmd l<CR>
 " a quick way to bring up Ack 
 noremap <silent> ,a :Ack --follow 
 
-
 " create a shortcut to get out of insert mode by typing 'jj'
 inoremap jj <ESC>
 
@@ -96,6 +100,8 @@ inoremap jj <ESC>
 :highlight ExtraWhitespace ctermbg=blue guibg=blue                                                                                                                                                                    
 " show trailing whitespace:                                                                                                                                                                                         
 :match ExtraWhitespace /\s\+\%#\@<!$/                                                                                                                                                                               
+:let g:ConqueTerm_CWInsert = 1
+:let g:ConqueTerm_InsertOnEnter = 0
 " show tabs                                                                                                                                                                                                         
 :2match ExtraWhitespace /\t/
 
@@ -111,4 +117,9 @@ augroup CommandTExtension
   autocmd BufWritePost * CommandTFlush
  augroup END
 
-
+ " Cmd-Shift-R for RSpec
+nmap <silent> <D-R> :call RunRspecCurrentFileConque()<CR>
+" Cmd-Shift-L for RSpec Current Line
+nmap <silent> <D-L> :call RunRspecCurrentLineConque()<CR>
+" ,Cmd-R for Last conque command
+nmap <silent> ,<D-R> :call RunLastConqueCommand()<CR>
