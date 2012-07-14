@@ -8,6 +8,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " Bundle: vim-scripts/AutoTag
 " Bundle: skwp/vim-ruby-conque 
 " Bundle: tpope/vim-surround
+" Bundle: tpope/vim-endwise
 call pathogen#infect()
 
 filetype off
