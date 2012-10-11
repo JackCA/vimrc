@@ -1,18 +1,23 @@
-" pathogen + bundles
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-" Bundle: tpope/vim-pathogen
-" Bundle: altercation/vim-colors-solarized
-" Bundle: vim-scripts/vmark.vim--Visual-Bookmarking
-" Bundle: nathanaelkane/vim-indent-guides
-" Bundle: wincent/Command-T
-" Bundle: vim-scripts/AutoTag
-" Bundle: skwp/vim-ruby-conque 
-" Bundle: tpope/vim-surround
-" Bundle: tpope/vim-endwise
-call pathogen#infect()
-
 filetype off
-call pathogen#runtime_append_all_bundles() 
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+"  " required! 
+Bundle 'gmarik/vundle'
+
+Bundle 'tpope/vim-pathogen'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'vim-scripts/vmark.vim--Visual-Bookmarking'
+Bundle 'nathanaelkane/vim-indent-guides'
+Bundle 'wincent/Command-T'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-endwise'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'majutsushi/tagbar'
+Bundle 'scrooloose/syntastic'
+Bundle 'Lokaltog/vim-powerline'
 
 syntax on
 filetype plugin indent on
@@ -21,23 +26,29 @@ set nobackup
 set nowritebackup
 set wildignore=*~
 
+" solarized
+set background=dark
+colorscheme solarized
+
+" powerline
+let g:Powerline_symbols = 'fancy'
 
 "folding
 set foldenable
 set foldmethod=syntax
 set foldlevelstart=4
 
-" solarized
-set background=dark
-colorscheme solarized
+" syntastic
+let g:syntastic_enable_balloons = 1
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
 set cursorline
+
 autocmd VimEnter * :IndentGuidesEnable
 set guioptions-=T
-" don't know what this is actually
 au BufNewFile,BufRead *.apk set filetype=apk
-
-" tab autocompletion
-imap <Tab> <C-P>
 
 "set tabs to 4 spaces.
 set tabstop=2
@@ -65,25 +76,17 @@ set tags=tags;/
 "autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
 
-
 "the so-called 'mandatory option'
 :set hidden
-
 
 let NERDTreeIgnore = ['\.pyc$', '\~$']
 map <F2> :NERDTreeToggle<CR>
 
-"open the window larger than normal (100 wide by 40 tall)
-"win 100 40
-
 set nocompatible
-"allow for c,w to change part of a camel-cased word
-"source $HOME/Dropbox/dev/camelcasemotion.vim
 
 "make it so mouse and keyboard don't exit select mode."
 "this makes it so we can select with the mouse and then act on that block."
 set selectmode=""
-
 
 " this gives me convenient key mappings for window movement
 noremap <silent> ,h :wincmd h<CR>
@@ -101,8 +104,6 @@ inoremap jj <ESC>
 :highlight ExtraWhitespace ctermbg=blue guibg=blue                                                                                                                                                                    
 " show trailing whitespace:                                                                                                                                                                                         
 :match ExtraWhitespace /\s\+\%#\@<!$/                                                                                                                                                                               
-:let g:ConqueTerm_CWInsert = 1
-:let g:ConqueTerm_InsertOnEnter = 0
 " show tabs                                                                                                                                                                                                         
 :2match ExtraWhitespace /\t/
 
@@ -117,10 +118,3 @@ augroup CommandTExtension
   autocmd FocusGained * CommandTFlush
   autocmd BufWritePost * CommandTFlush
  augroup END
-
- " Cmd-Shift-R for RSpec
-nmap <silent> <D-R> :call RunRspecCurrentFileConque()<CR>
-" Cmd-Shift-L for RSpec Current Line
-nmap <silent> <D-L> :call RunRspecCurrentLineConque()<CR>
-" ,Cmd-R for Last conque command
-nmap <silent> ,<D-R> :call RunLastConqueCommand()<CR>
