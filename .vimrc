@@ -17,7 +17,9 @@ Bundle 'tpope/vim-endwise'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/syntastic'
-Bundle 'Lokaltog/vim-powerline'
+Bundle 'tpope/vim-rails'
+Bundle 'scrooloose/nerdtree'
+Bundle 'tpope/vim-eunuch'
 
 syntax on
 filetype plugin indent on
@@ -32,6 +34,9 @@ colorscheme solarized
 
 " powerline
 let g:Powerline_symbols = 'fancy'
+
+" tagbar
+nmap <F8> :TagbarToggle<CR>
 
 "folding
 set foldenable
