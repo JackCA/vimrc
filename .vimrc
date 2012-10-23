@@ -20,6 +20,8 @@ Bundle 'scrooloose/syntastic'
 Bundle 'tpope/vim-rails'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-eunuch'
+Bundle 'bitc/vim-bad-whitespace'
+Bundle 'scrooloose/nerdcommenter'
 
 syntax on
 filetype plugin indent on
@@ -123,3 +125,18 @@ augroup CommandTExtension
   autocmd FocusGained * CommandTFlush
   autocmd BufWritePost * CommandTFlush
  augroup END
+if executable('coffeetags')
+  let g:tagbar_type_coffee = {
+        \ 'ctagsbin' : 'coffeetags',
+        \ 'ctagsargs' : '',
+        \ 'kinds' : [
+        \ 'f:functions',
+        \ 'o:object',
+        \ ],
+        \ 'sro' : ".",
+        \ 'kind2scope' : {
+        \ 'f' : 'object',
+        \ 'o' : 'object',
+        \ }
+        \ }
+endif
