@@ -20,9 +20,10 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-eunuch'
 Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-endwise'
-Bundle 'tpope/gem-ctags'
+Bundle 'tpope/vim-bundler'
 Bundle 'bitc/vim-bad-whitespace'
 Bundle 'scrooloose/nerdcommenter'
+Bundle 'vim-scripts/AutoTag'
 
 syntax on
 filetype plugin indent on
