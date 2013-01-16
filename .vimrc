@@ -24,6 +24,7 @@ Bundle 'tpope/vim-bundler'
 Bundle 'bitc/vim-bad-whitespace'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'vim-scripts/AutoTag'
+Bundle 'ervandew/supertab'
 
 syntax on
 filetype plugin indent on
