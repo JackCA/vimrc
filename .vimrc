@@ -7,6 +7,7 @@ call vundle#rc()
 "  " required! 
 Bundle 'gmarik/vundle'
 
+Bundle 'Lokaltog/powerline'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'vim-scripts/vmark.vim--Visual-Bookmarking'
 Bundle 'nathanaelkane/vim-indent-guides'
@@ -21,10 +22,12 @@ Bundle 'tpope/vim-eunuch'
 Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-bundler'
+Bundle 'tpope/vim-fugitive'
 Bundle 'bitc/vim-bad-whitespace'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'vim-scripts/AutoTag'
 Bundle 'ervandew/supertab'
+Bundle 'Raimondi/delimitMate'
 
 syntax on
 filetype plugin indent on
@@ -36,9 +39,6 @@ set wildignore=*~
 " solarized
 set background=dark
 colorscheme solarized
-
-" powerline
-let g:Powerline_symbols = 'fancy'
 
 " tagbar
 nmap <F8> :TagbarToggle<CR>
@@ -53,6 +53,14 @@ let g:syntastic_enable_balloons = 1
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+
+" powerline
+set guifont=PowerlineSymbols\ for\ Powerline
+python import sys; sys.path.append("/Library/Python/2.7/site-packages")
+python from powerline.ext.vim import source_plugin; source_plugin()
+set nocompatible   " Disable vi-compatibility
+set encoding=utf-8 " Necessary to show Unicode glyp
+set laststatus=2
 
 set cursorline
 
@@ -110,11 +118,11 @@ noremap <silent> ,a :Ack --follow
 " create a shortcut to get out of insert mode by typing 'jj'
 inoremap jj <ESC>
 
-" highlight unwanted whitespace                                                                                                                                                                                     
-:highlight ExtraWhitespace ctermbg=blue guibg=blue                                                                                                                                                                    
-" show trailing whitespace:                                                                                                                                                                                         
-:match ExtraWhitespace /\s\+\%#\@<!$/                                                                                                                                                                               
-" show tabs                                                                                                                                                                                                         
+" highlight unwanted whitespace
+:highlight ExtraWhitespace ctermbg=blue guibg=blue
+" show trailing whitespace:
+:match ExtraWhitespace /\s\+\%#\@<!$/
+" show tabs
 :2match ExtraWhitespace /\t/
 
 "from here down is the default _vimrc
@@ -122,6 +130,12 @@ set nocompatible
 source $VIMRUNTIME/vimrc_example.vim
 source $VIMRUNTIME/mswin.vim
 behave mswin
+
+" don't require W to move tabs
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 augroup CommandTExtension
   autocmd!
