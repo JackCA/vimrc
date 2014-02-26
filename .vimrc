@@ -4,14 +4,12 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " let Vundle manage Vundle
-"  " required! 
 Bundle 'gmarik/vundle'
 
-Bundle 'Lokaltog/powerline'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'Yggdroot/indentLine'
 Bundle 'vim-scripts/vmark.vim--Visual-Bookmarking'
-Bundle 'nathanaelkane/vim-indent-guides'
-Bundle 'wincent/Command-T'
+Bundle 'kien/ctrlp.vim'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/syntastic'
@@ -28,24 +26,48 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'vim-scripts/AutoTag'
 Bundle 'ervandew/supertab'
 Bundle 'Raimondi/delimitMate'
+Bundle 'sjl/gundo.vim'
+Bundle 'digitaltoad/vim-jade'
+Bundle 'othree/html5.vim'
+Bundle 'cakebaker/scss-syntax.vim'
+Bundle 'bling/vim-airline'
+Bundle 'mbbill/undotree'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'goldfeld/vim-seek'
+Bundle 'myusuf3/numbers.vim'
 
 syntax on
+au BufReadPost *.hamlc set syntax=haml
+au BufReadPost *._sass set syntax=sass
 filetype plugin indent on
 set nobk
 set nobackup
 set nowritebackup
-set wildignore=*~
+set wildignore=*~,tmp,*.swp,*.bak,*.pyc,*.class,*.jar,*.gif,*.png,*.jpg
+set wildignore+=vendor
 
-" solarized
+
+" colorscheme
 set background=dark
 colorscheme solarized
+
+" font
+if has('gui_running')
+  set guifont=Sauce\ Code\ Powerline:h11
+endif
+
+let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
 
 " tagbar
 nmap <F8> :TagbarToggle<CR>
 
 "folding
 set foldenable
-set foldmethod=syntax
+set foldmethod=indent
 set foldlevelstart=4
 
 " syntastic
@@ -54,19 +76,17 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-" powerline
-set guifont=PowerlineSymbols\ for\ Powerline
-python import sys; sys.path.append("/Library/Python/2.7/site-packages")
-python from powerline.ext.vim import source_plugin; source_plugin()
+" gundo
+nnoremap <C-G> :GundoToggle<CR>
+
 set nocompatible   " Disable vi-compatibility
 set encoding=utf-8 " Necessary to show Unicode glyp
+set statusline+=%f
 set laststatus=2
 
 set cursorline
 
-autocmd VimEnter * :IndentGuidesEnable
 set guioptions-=T
-au BufNewFile,BufRead *.apk set filetype=apk
 
 "set tabs to 4 spaces.
 set tabstop=2
@@ -90,7 +110,6 @@ set smartcase
 "search the whole build tree for ctags
 set tags=tags;/
 
-:let g:indent_guides_enable_on_vim_startup = "1"
 "autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
 
@@ -98,7 +117,8 @@ autocmd VimEnter * wincmd p
 :set hidden
 
 let NERDTreeIgnore = ['\.pyc$', '\~$']
-map <F2> :NERDTreeToggle<CR>
+map <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 set nocompatible
 
@@ -106,30 +126,15 @@ set nocompatible
 "this makes it so we can select with the mouse and then act on that block."
 set selectmode=""
 
-" this gives me convenient key mappings for window movement
-noremap <silent> ,h :wincmd h<CR>
-noremap <silent> ,j :wincmd j<CR>
-noremap <silent> ,k :wincmd k<CR>
-noremap <silent> ,l :wincmd l<CR>
-
-" a quick way to bring up Ack 
-noremap <silent> ,a :Ack --follow 
 
 " create a shortcut to get out of insert mode by typing 'jj'
 inoremap jj <ESC>
 
-" highlight unwanted whitespace
-:highlight ExtraWhitespace ctermbg=blue guibg=blue
-" show trailing whitespace:
-:match ExtraWhitespace /\s\+\%#\@<!$/
-" show tabs
-:2match ExtraWhitespace /\t/
-
-"from here down is the default _vimrc
-set nocompatible
-source $VIMRUNTIME/vimrc_example.vim
-source $VIMRUNTIME/mswin.vim
-behave mswin
+"autoreload this file
+augroup reload_vimrc " {
+      autocmd!
+          autocmd BufWritePost $MYVIMRC source $MYVIMRC
+        augroup END " }"
 
 " don't require W to move tabs
 nnoremap <C-J> <C-W><C-J>
@@ -137,11 +142,7 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-augroup CommandTExtension
-  autocmd!
-  autocmd FocusGained * CommandTFlush
-  autocmd BufWritePost * CommandTFlush
- augroup END
+
 if executable('coffeetags')
   let g:tagbar_type_coffee = {
         \ 'ctagsbin' : 'coffeetags',
@@ -157,3 +158,11 @@ if executable('coffeetags')
         \ }
         \ }
 endif
+
+"from here down is the default _vimrc
+set nocompatible
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
+behave mswin
+
+
