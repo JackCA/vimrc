@@ -9,13 +9,15 @@ Bundle 'gmarik/vundle'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'Yggdroot/indentLine'
 Bundle 'vim-scripts/vmark.vim--Visual-Bookmarking'
+
 Bundle 'kien/ctrlp.vim'
-Bundle 'kchmck/vim-coffee-script'
 Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
-Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-surround'
+
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-eunuch'
 Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-endwise'
@@ -35,6 +37,7 @@ Bundle 'mbbill/undotree'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'goldfeld/vim-seek'
 Bundle 'myusuf3/numbers.vim'
+Bundle 'mileszs/ack.vim'
 
 syntax on
 au BufReadPost *.hamlc set syntax=haml
@@ -137,11 +140,12 @@ augroup reload_vimrc " {
         augroup END " }"
 
 " don't require W to move tabs
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+nmap <C-J> <C-W><C-J>
+nmap <C-K> <C-W><C-K>
+nmap <C-L> <C-W><C-L>
+nmap <C-H> <C-W><C-H>
 
+nmap <C-f> :Ack<space>
 
 if executable('coffeetags')
   let g:tagbar_type_coffee = {
@@ -164,5 +168,4 @@ set nocompatible
 source $VIMRUNTIME/vimrc_example.vim
 source $VIMRUNTIME/mswin.vim
 behave mswin
-
 
