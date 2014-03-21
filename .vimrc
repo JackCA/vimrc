@@ -15,6 +15,7 @@ Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-surround'
+Bundle 'thoughtbot/vim-rspec'
 
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'tpope/vim-rails'
@@ -38,6 +39,7 @@ Bundle 'airblade/vim-gitgutter'
 Bundle 'goldfeld/vim-seek'
 Bundle 'myusuf3/numbers.vim'
 Bundle 'mileszs/ack.vim'
+Bundle 'terryma/vim-expand-region'
 
 syntax on
 au BufReadPost *.hamlc set syntax=haml
@@ -81,6 +83,15 @@ set statusline+=%*
 
 " gundo
 nnoremap <C-G> :GundoToggle<CR>
+
+
+" rspec
+let g:rspec_runner = "os_x_iterm"
+" RSpec.vim mappings
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
 
 set nocompatible   " Disable vi-compatibility
 set encoding=utf-8 " Necessary to show Unicode glyp
