@@ -8,7 +8,6 @@ Bundle 'gmarik/vundle'
 
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'Yggdroot/indentLine'
-Bundle 'vim-scripts/vmark.vim--Visual-Bookmarking'
 
 Bundle 'kien/ctrlp.vim'
 Bundle 'majutsushi/tagbar'
@@ -27,7 +26,6 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'bitc/vim-bad-whitespace'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'vim-scripts/AutoTag'
-Bundle 'ervandew/supertab'
 Bundle 'Raimondi/delimitMate'
 Bundle 'sjl/gundo.vim'
 Bundle 'digitaltoad/vim-jade'
@@ -40,6 +38,15 @@ Bundle 'goldfeld/vim-seek'
 Bundle 'myusuf3/numbers.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'terryma/vim-expand-region'
+Bundle 'mustache/vim-mustache-handlebars'
+Bundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
+Bundle "Valloric/YouCompleteMe"
+Bundle "marijnh/tern_for_vim"
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
+Bundle "honza/vim-snippets"
+Bundle 'jelera/vim-javascript-syntax'
 
 syntax on
 au BufReadPost *.hamlc set syntax=haml
@@ -56,7 +63,7 @@ let mapleader = " "
 
 " colorscheme
 set background=dark
-colorscheme solarized
+colorscheme Tomorrow-Night-Eighties
 
 " font
 if has('gui_running')
@@ -82,6 +89,10 @@ let g:syntastic_enable_balloons = 1
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+
+" snippets
+imap ss <esc>a<Plug>snipMateNextOrTrigger
+smap ss <Plug>snipMateNextOrTrigger
 
 " gundo
 nnoremap <C-G> :GundoToggle<CR>
