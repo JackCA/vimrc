@@ -7,6 +7,9 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'NLKNguyen/papercolor-theme'
+Bundle 'Wutzara/vim-materialtheme'
+Bundle "daylerees/colour-schemes", { "rtp": ""}
 Bundle 'Yggdroot/indentLine'
 
 Bundle 'kien/ctrlp.vim'
@@ -46,7 +49,13 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle "honza/vim-snippets"
-Bundle 'jelera/vim-javascript-syntax'
+Plugin 'othree/yajs.vim'
+Bundle 'wesQ3/vim-windowswap'
+Bundle 'claco/jasmine.vim'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'Konfekt/FastFold'
+Bundle 'miyakogi/conoline.vim'
+Bundle 'JazzCore/ctrlp-cmatcher'
 
 syntax on
 au BufReadPost *.hamlc set syntax=haml
@@ -55,20 +64,25 @@ filetype plugin indent on
 set nobk
 set nobackup
 set nowritebackup
-set wildignore=*~,tmp,*.swp,*.bak,*.pyc,*.class,*.jar,*.gif,*.png,*.jpg
+set wildignore=*~,*/tmp/*,tmp/*,dist/*,*.swp,*.bak,*.pyc,*.class,*.jar,*.gif,*.png,*.jpg
 set wildignore+=vendor
 
 " Leader
 let mapleader = " "
 
 " colorscheme
-set background=dark
-colorscheme Tomorrow-Night-Eighties
+colorscheme materialtheme
+"set background=dark
+"colorscheme Tomorrow-Night
 
 " font
 if has('gui_running')
   set guifont=Sauce\ Code\ Powerline:h11
 endif
+
+" vv visual expansion
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
 
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
@@ -91,8 +105,8 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 " snippets
-imap ss <esc>a<Plug>snipMateNextOrTrigger
-smap ss <Plug>snipMateNextOrTrigger
+imap aa <esc>a<Plug>snipMateNextOrTrigger
+smap aa <Plug>snipMateNextOrTrigger
 
 " gundo
 nnoremap <C-G> :GundoToggle<CR>
@@ -103,17 +117,40 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  "let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
+" use better ctrlp match function
+let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+
+" CtrlP auto cache clearing.
+" ----------------------------------------------------------------------------
+function! SetupCtrlP()
+  if exists("g:loaded_ctrlp") && g:loaded_ctrlp
+    augroup CtrlPExtension
+      autocmd!
+      autocmd FocusGained  * CtrlPClearCache
+      autocmd BufWritePost * CtrlPClearCache
+    augroup END
+  endif
+endfunction
+if has("autocmd")
+  autocmd VimEnter * :call SetupCtrlP()
 endif
 
 
 " rspec
 let g:rspec_runner = "os_x_iterm"
 " RSpec.vim mappings
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
+"map <Leader>t :call RunCurrentSpecFile()<CR>
+"map <Leader>s :call RunNearestSpec()<CR>
+"map <Leader>l :call RunLastSpec()<CR>
+"map <Leader>a :call RunAllSpecs()<CR>
+
+" easymotion
+map <Leader> <Plug>(easymotion-prefix)
+nmap s <Plug>(easymotion-s)
 
 set nocompatible   " Disable vi-compatibility
 set encoding=utf-8 " Necessary to show Unicode glyp
@@ -152,7 +189,7 @@ autocmd VimEnter * wincmd p
 "the so-called 'mandatory option'
 :set hidden
 
-let NERDTreeIgnore = ['\.pyc$', '\~$']
+let NERDTreeIgnore = ['\.pyc$', 'tmp', '\~$']
 map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
