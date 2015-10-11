@@ -1,6 +1,6 @@
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 
 " let Vundle manage Vundle
@@ -12,7 +12,7 @@ Bundle 'Wutzara/vim-materialtheme'
 Bundle "daylerees/colour-schemes", { "rtp": ""}
 Bundle 'Yggdroot/indentLine'
 
-Bundle 'kien/ctrlp.vim'
+Bundle 'ctrlpvim/ctrlp.vim'
 Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
@@ -56,6 +56,10 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'Konfekt/FastFold'
 Bundle 'miyakogi/conoline.vim'
 Bundle 'JazzCore/ctrlp-cmatcher'
+Bundle 'rking/ag.vim'
+
+"
+set backupdir=$HOME/vim-backups
 
 syntax on
 au BufReadPost *.hamlc set syntax=haml
@@ -111,17 +115,14 @@ smap aa <Plug>snipMateNextOrTrigger
 " gundo
 nnoremap <C-G> :GundoToggle<CR>
 
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+" use silver searcher
 if executable('ag')
-  " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  "let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " Note we extract the column as well as the file and line number
+  set grepprg=ag\ --nogroup\ --nocolor\ --column
+  set grepformat=%f:%l:%c%m
 endif
 
-" use better ctrlp match function
-let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+nnoremap \ :Ag<SPACE>
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 
 " CtrlP auto cache clearing.
