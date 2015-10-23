@@ -234,6 +234,15 @@ if executable('coffeetags')
         \ }
 endif
 
+function! HasConfig(file, dir)
+    return findfile(a:file, escape(a:dir, ' ') . ';') !=# ''
+endfunction
+
+autocmd BufNewFile,BufReadPre *.js  let b:syntastic_checkers =
+    \ HasConfig('.eslintrc', expand('<amatch>:h')) ? ['eslint'] :
+    \ HasConfig('.jshintrc', expand('<amatch>:h')) ? ['jshint'] :
+    \     ['standard']
+
 "from here down is the default _vimrc
 set nocompatible
 source $VIMRUNTIME/vimrc_example.vim
