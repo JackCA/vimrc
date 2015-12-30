@@ -44,7 +44,6 @@ Bundle 'terryma/vim-expand-region'
 Bundle 'mustache/vim-mustache-handlebars'
 Bundle 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 Bundle "Valloric/YouCompleteMe"
-Bundle "marijnh/tern_for_vim"
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
@@ -75,7 +74,7 @@ set wildignore+=vendor
 let mapleader = " "
 
 " colorscheme
-colorscheme materialtheme
+colorscheme papercolor
 "set background=dark
 "colorscheme Tomorrow-Night
 
