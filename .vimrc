@@ -6,10 +6,9 @@ call vundle#rc()
 " let Vundle manage Vundle
 Bundle 'gmarik/vundle'
 
-Bundle 'altercation/vim-colors-solarized'
 Bundle 'NLKNguyen/papercolor-theme'
 Bundle 'Wutzara/vim-materialtheme'
-Bundle "daylerees/colour-schemes", { "rtp": ""}
+Bundle 'junegunn/seoul256.vim'
 Bundle 'Yggdroot/indentLine'
 
 Bundle 'ctrlpvim/ctrlp.vim'
@@ -74,9 +73,9 @@ set wildignore+=vendor
 let mapleader = " "
 
 " colorscheme
-colorscheme papercolor
-"set background=dark
-"colorscheme Tomorrow-Night
+set t_Co=256
+colorscheme seoul256
+set background=dark
 
 " font
 if has('gui_running')
@@ -140,14 +139,6 @@ if has("autocmd")
 endif
 
 
-" rspec
-let g:rspec_runner = "os_x_iterm"
-" RSpec.vim mappings
-"map <Leader>t :call RunCurrentSpecFile()<CR>
-"map <Leader>s :call RunNearestSpec()<CR>
-"map <Leader>l :call RunLastSpec()<CR>
-"map <Leader>a :call RunAllSpecs()<CR>
-
 " easymotion
 map <Leader> <Plug>(easymotion-prefix)
 nmap s <Plug>(easymotion-s)
@@ -156,8 +147,6 @@ set nocompatible   " Disable vi-compatibility
 set encoding=utf-8 " Necessary to show Unicode glyp
 set statusline+=%f
 set laststatus=2
-
-set cursorline
 
 set guioptions-=T
 
@@ -202,6 +191,7 @@ set selectmode=""
 
 " create a shortcut to get out of insert mode by typing 'jj'
 inoremap jj <ESC>
+inoremap jk <ESC>
 
 "autoreload this file
 augroup reload_vimrc " {
@@ -237,9 +227,10 @@ function! HasConfig(file, dir)
     return findfile(a:file, escape(a:dir, ' ') . ';') !=# ''
 endfunction
 
+
 autocmd BufNewFile,BufReadPre *.js  let b:syntastic_checkers =
-    \ HasConfig('.eslintrc', expand('<amatch>:h')) ? ['eslint'] :
     \ HasConfig('.jshintrc', expand('<amatch>:h')) ? ['jshint'] :
+    \ HasConfig('.eslintrc', expand('<amatch>:h')) ? ['eslint'] :
     \     ['standard']
 
 "from here down is the default _vimrc
